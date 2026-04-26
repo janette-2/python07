@@ -78,10 +78,3 @@ class AquaFactory(CreatureFactory):
 
     def create_evolved(self) -> Creature:
         return Torragon()
-
-
-# TEST of the specific creatures [temporal]
-if __name__ == "__main__":
-    a = Torragon()
-    print(f"Descripción: {a.describe()}")
-    print(f"Ataque: {a.attack()}")
