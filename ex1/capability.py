@@ -1,83 +1,5 @@
 from abc import ABC, abstractmethod
-
-
-class Creature(ABC):
-
-    def __init__(self, name: str, type: str) -> None:
-        self.name = name
-        self.type = type
-
-    @abstractmethod
-    def attack(self) -> str:
-        pass
-
-    def describe(self) -> str:
-        return f"{self.name} is a {self.type} type Creature"
-
-
-class Flameling(Creature):
-
-    def __init__(self) -> None:
-        super().__init__("Flameling", "Fire")
-
-    def attack(self) -> str:
-        return "Flameling uses Ember!"
-
-
-class Pyrodon(Creature):
-
-    def __init__(self) -> None:
-        super().__init__("Pyrodon", "Fire/Flying")
-
-    def attack(self) -> str:
-        return "Pyrodon uses Flamethrower!"
-
-
-class Aquabub(Creature):
-
-    def __init__(self) -> None:
-        super().__init__("Aquabub", "Water")
-
-    def attack(self) -> str:
-        return "Aquabub uses Water Gun!"
-
-
-class Torragon(Creature):
-
-    def __init__(self) -> None:
-        super().__init__("Torragon", "Water")
-
-    def attack(self) -> str:
-        return "Torragon uses Hydro Pump!"
-
-
-class CreatureFactory(ABC):
-
-    @abstractmethod
-    def create_base(self) -> Creature:
-        pass
-
-    @abstractmethod
-    def create_evolved(self) -> Creature:
-        pass
-
-
-class FlameFactory(CreatureFactory):
-
-    def create_base(self) -> Creature:
-        return Flameling()
-
-    def create_evolved(self) -> Creature:
-        return Pyrodon()
-
-
-class AquaFactory(CreatureFactory):
-
-    def create_base(self) -> Creature:
-        return Aquabub()
-
-    def create_evolved(self) -> Creature:
-        return Torragon()
+from ex0.factory import Creature
 
 
 # NEW CODE: -------------------------------
@@ -88,6 +10,10 @@ class HealCapability(ABC):
 
 
 class TransformCapability(ABC):
+
+    def __init__(self) -> None:
+        self.is_transformed = False
+
     @abstractmethod
     def transform(self) -> str:
         pass
@@ -99,7 +25,7 @@ class TransformCapability(ABC):
 
 class Sproutling(Creature, HealCapability):
     def __init__(self) -> None:
-        super().__init__("Sproutling", "Grass")
+        Creature.__init__(self, "Sproutling", "Grass")
 
     def attack(self) -> str:
         return "Sproutling uses Vine Whip!"
@@ -110,7 +36,7 @@ class Sproutling(Creature, HealCapability):
 
 class Bloomelle(Creature, HealCapability):
     def __init__(self) -> None:
-        super().__init__("Bloomelle", "Grass/Fairy")
+        Creature.__init__(self, "Bloomelle", "Grass/Fairy")
 
     def attack(self) -> str:
         return "Bloomelle uses Petal Dance!"
@@ -121,9 +47,12 @@ class Bloomelle(Creature, HealCapability):
 
 class Shiftling(Creature, TransformCapability):
     def __init__(self) -> None:
-        super().__init__("Shiftling", "Normal")
+        Creature.__init__(self, "Shiftling", "Normal")
+        TransformCapability.__init__(self)
 
     def attack(self) -> str:
+        if self.is_transformed:
+            return "Morphagon unleashes a devastating morph strike!"
         return "Shiftling attacks normally."
 
     def transform(self) -> str:
@@ -135,9 +64,12 @@ class Shiftling(Creature, TransformCapability):
 
 class Morphagon(Creature, TransformCapability):
     def __init__(self) -> None:
-        super().__init__("Morphagon", "Normal/Dragon")
+        Creature.__init__(self, "Morphagon", "Normal/Dragon")
+        TransformCapability.__init__(self)
 
     def attack(self) -> str:
+        if self.is_transformed:
+            return "Shiftling performs a boosted strike!"
         return "Morphagon attacks normally."
 
     def transform(self) -> str:
