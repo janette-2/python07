@@ -141,7 +141,7 @@ class Morphagon(Creature, TransformCapability):
         return "Morphagon attacks normally."
 
     def transform(self) -> str:
-        pass
+        return "Morphagon morphs into a dragonic battle form!"
 
     def revert(self) -> str:
-        pass
+        return "Morphagon stabilizes its form."
